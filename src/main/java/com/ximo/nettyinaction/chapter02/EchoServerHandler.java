@@ -26,7 +26,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         // 这里应该是客户端传入的就是这个类型
         ByteBuf inByteBuf = (ByteBuf) msg;
         log.info("Server received: {}", inByteBuf.toString(CharsetUtil.UTF_8));
-        // 写出数据
+        // 写出数据 异步操作
         ChannelFuture channelFuture = ctx.write(inByteBuf);
     }
 

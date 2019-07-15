@@ -24,33 +24,40 @@ public class EchoServer {
         this.port = port;
     }
 
+    public static void main(String[] args) throws InterruptedException {
+        int port = 8081;
+        new EchoServer(port).start();
+    }
+
     public void start() throws InterruptedException {
-        // 创建自己的服务器处理器
-        EchoServerHandler echoServerHandler = new EchoServerHandler();
         // 创建EventLoop
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
         // 创建ServerBootstrap
-        ServerBootstrap serverBootstrap = new ServerBootstrap();
-        ChannelFuture channelFuture = null;
+        ChannelHandler channelHandler = new ChannelInitializer<SocketChannel>() {
+            @Override
+            protected void initChannel(SocketChannel ch) {
+                // 责任链模式
+                ch.pipeline().addLast(new EchoServerHandler());
+            }
+        };
         try {
-            channelFuture = serverBootstrap.group(eventLoopGroup)
+            ChannelFuture channelFuture = new ServerBootstrap()
+                    .group(eventLoopGroup)
                     // 指定Nio的channel
                     .channel(NioServerSocketChannel.class)
                     // 指定特定端口
                     .localAddress(new InetSocketAddress(port))
                     // 添加一个EchoServerHandler到于Channel的 ChannelPipeline
-                    .childHandler(new ChannelInitializer<SocketChannel>() {
-                        @Override
-                        protected void initChannel(SocketChannel ch) {
-                            ch.pipeline().addLast(echoServerHandler);
-                        }
-                    }).bind().sync();
-        }finally {
-            SocketAddress socketAddress = Optional.ofNullable(channelFuture)
-                    .map(ChannelFuture::channel)
-                    .map(Channel::localAddress)
-                    .orElse(null);
-            log.info("{} started and listening for connections on {}", EchoServer.class.getName(), socketAddress);
+                    .childHandler(channelHandler)
+                    // 绑定
+                    .bind()
+                    // 同步 直到绑定完成
+                    .sync();
+            Channel channel = channelFuture.channel();
+            log.info("{} started and listening for connections on {}", EchoServer.class.getName(), channel.localAddress());
+            channel.closeFuture().sync();
+        } finally {
+            // 关闭 EventLoopGroup，释放所有的资源
             eventLoopGroup.shutdownGracefully().sync();
         }
 
