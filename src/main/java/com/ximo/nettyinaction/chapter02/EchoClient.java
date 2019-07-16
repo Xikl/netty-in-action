@@ -35,6 +35,7 @@ public class EchoClient {
                     ch.pipeline().addLast(new EchoClientHandler());
                 }
             };
+            // Bootstrap 适用于客户端
             ChannelFuture channelFuture = new Bootstrap()
                     //指定 EventLoopGroup 以处理客户端事件；需要适用于 NIO 的实现
                     .group(eventLoopGroup)

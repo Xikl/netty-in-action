@@ -41,6 +41,10 @@ public class EchoServer {
             }
         };
         try {
+            // ServerBootstrap 用于服务端
+            // 他的group 则需要两个（也可以是同一个实例）一个parent 一个 child
+            // ServerBootstrap 类也可以只使用一个 EventLoopGroup，此时其将在两个场景下共用
+            // 同一个 EventLoopGroup
             ChannelFuture channelFuture = new ServerBootstrap()
                     .group(eventLoopGroup)
                     // 指定Nio的channel

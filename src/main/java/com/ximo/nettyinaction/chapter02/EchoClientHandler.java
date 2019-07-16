@@ -9,6 +9,7 @@ import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 简单的实现类，其中的channelRead0有点意思
  * @author xikl
  * @date 2019/7/15
  */
