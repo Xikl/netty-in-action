@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -36,7 +37,7 @@ public class PlainOioServer {
                     // 将消息写个已经连接的客户端
                     try (OutputStream outputStream = clientSocket.getOutputStream()) {
 
-                        outputStream.write("Hello".getBytes(Charset.forName("UTF-8")));
+                        outputStream.write("Hello".getBytes(StandardCharsets.UTF_8));
                         outputStream.flush();
                     } catch (IOException e) {
                         log.error("写出失败", e);
