@@ -16,6 +16,7 @@ import java.util.Set;
 
 /**
  * 第一次写Nio socket编程 实在是太难了吧
+ * 日后再来看 你会清晰很多
  *
  * @author xikl
  * @date 2019/7/17
@@ -24,8 +25,9 @@ import java.util.Set;
 public class PlainNioServer {
 
     public void serve(int port) throws IOException {
+        // 打开链接
         try (ServerSocketChannel serverChannel = ServerSocketChannel.open()) {
-
+            // 非阻塞
             serverChannel.configureBlocking(false);
             try (ServerSocket ss = serverChannel.socket()) {
                 InetSocketAddress address = new InetSocketAddress(port);
