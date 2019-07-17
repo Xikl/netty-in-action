@@ -1,4 +1,4 @@
-package com.ximo.nettyinaction.chapter03;
+package com.ximo.nettyinaction.chapter04;
 
 import lombok.extern.slf4j.Slf4j;
 
