@@ -1,4 +1,4 @@
-package com.ximo.nettyinaction.chapter05;
+package com.ximo.nettyinaction.study.chapter05;
 
 import io.netty.buffer.*;
 import io.netty.channel.Channel;

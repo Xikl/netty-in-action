@@ -1,4 +1,4 @@
-package com.ximo.nettyinaction.chapter04;
+package com.ximo.nettyinaction.study.chapter04;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 

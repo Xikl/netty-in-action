@@ -1,4 +1,4 @@
-package com.ximo.nettyinaction.chapter02;
+package com.ximo.nettyinaction.study.chapter02;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -8,8 +8,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.util.Optional;
 
 /**
  * @author 朱文赵

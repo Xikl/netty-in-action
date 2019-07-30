@@ -1,4 +1,4 @@
-package com.ximo.nettyinaction.chapter01;
+package com.ximo.nettyinaction.study.chapter01;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

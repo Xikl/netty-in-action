@@ -1,4 +1,4 @@
-package com.ximo.nettyinaction.chapter04;
+package com.ximo.nettyinaction.study.chapter04;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;

@@ -1,4 +1,4 @@
-package com.ximo.nettyinaction.chapter02;
+package com.ximo.nettyinaction.study.chapter02;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
