@@ -2,6 +2,7 @@ package com.ximo.nettyinaction.chapter05;
 
 import io.netty.buffer.*;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.ByteProcessor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +22,6 @@ public class ByteBufExamples {
     private static final ByteBuf BYTE_BUF_FROM_SOMEWHERE = Unpooled.buffer(1024);
 
     private static final Channel CHANNEL_FROM_SOMEWHERE = new NioSocketChannel();
-
-//    private static final ChannelHandlerContext CHANNEL_HANDLER_CONTEXT_FROM_SOMEWHERE =
 
     /**
      * 处理一个数组的方法
@@ -268,5 +267,37 @@ public class ByteBufExamples {
         final ByteBufHolder copy = byteBufHolder.copy();
         // 浅拷贝
         final ByteBufHolder duplicate = byteBufHolder.duplicate();
+    }
+
+    // byteBuf 的分配
+    public static void obtainingByteBufAllocatorReference() {
+        Channel channel = CHANNEL_FROM_SOMEWHERE;
+        // 获得分配器
+        final ByteBufAllocator alloc = channel.alloc();
+
+        ChannelHandlerContext channelHandlerContext = null;
+
+        // 似乎没有办法拿到这个值
+        final ByteBufAllocator alloc1 = channelHandlerContext.alloc();
+    }
+
+    // 很棒的工具类
+    public static void byteBufUtilTest() {
+        final byte[] bytes = ByteBufUtil.getBytes(BYTE_BUF_FROM_SOMEWHERE);
+    }
+
+
+    public static void referenceCounting() {
+        Channel channel = CHANNEL_FROM_SOMEWHERE;
+        final ByteBufAllocator alloc = channel.alloc();
+        final ByteBuf byteBuf = alloc.directBuffer();
+        // 是否引用次数为1
+        assert byteBuf.refCnt() == 1;
+    }
+
+    public static void releaseReferenceCountedObject() {
+        ByteBuf byteBuf = BYTE_BUF_FROM_SOMEWHERE;
+        // 是否成功
+        final boolean release = byteBuf.release();
     }
 }
