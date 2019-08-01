@@ -12,6 +12,16 @@ ServerBootstrap.bind()
 -> initAndRegister()
     // 初始化 .channel() 中传入的 channel.class, 如 NioServerSocketChannel.class
     -> newChannel()  
+    -> init()
+        -> setChannelOptions setChannelAttrs
+        // 设置为局部变量
+        -> setChildOptions setChildAttrs
+        // 设置用户自己的服务端handler
+        -> addHandler
+        // 一个保存了用户的自定义熟悉 创建一个新连接
+        // ServerBootstrapAcceptor(channel, childGroup, childHandler,childOptions, childAttrs)
+        -> addServerBootstrapAcceptor
+        
 ```
 2. NioServerSocketChannel的无参构造函数
 ```
