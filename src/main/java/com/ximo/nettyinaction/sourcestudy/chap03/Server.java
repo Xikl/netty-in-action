@@ -29,6 +29,8 @@ public class Server {
 
         try {
             final ChannelFuture channelFuture = new ServerBootstrap()
+                    // 设置组
+                    .group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .localAddress(new InetSocketAddress(PORT))
                     .childOption(ChannelOption.TCP_NODELAY, true)
