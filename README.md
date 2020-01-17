@@ -3,6 +3,8 @@
 ## 学习资料
 - [netty-in-action-cn](https://github.com/ReactivePlatform/netty-in-action-cn)
 - [netty-in-action](https://github.com/normanmaurer/netty-in-action)
+- [user-guide-for-4.x](https://netty.io/wiki/user-guide-for-4.x.html)
+- [user-guide-for-4.x配套翻译](https://github.com/waylau/netty-4-user-guide)
 
 ## 源码学习
 ### 服务端的Socket在哪里进行的初始化？
