@@ -55,6 +55,7 @@ public class UDPProvider {
                     ds.receive(receivePacket);
 
                     final String hostAddress = receivePacket.getAddress().getHostAddress();
+                    // 这里一定要拿数据的长度，否则会出现很多无效的字符长度
                     final int dataLength = receivePacket.getLength();
                     final int port = receivePacket.getPort();
                     final byte[] resultDataByteArray = receivePacket.getData();
