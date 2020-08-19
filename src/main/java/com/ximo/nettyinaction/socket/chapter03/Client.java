@@ -20,6 +20,7 @@ public class Client {
         initSocket(socket);
 
         // 链接到本地20000端口，超时时间3秒，超过则抛出超时异常
+        // 特别注意只要socket中带上了服务器的信息那么就会连接
         socket.connect(new InetSocketAddress(Inet4Address.getLocalHost(), PORT), 3000);
 
         System.out.println("已发起服务器连接，并进入后续流程～");
@@ -33,12 +34,19 @@ public class Client {
             System.out.println("异常关闭");
         }
 
-        // 释放资源
+        // 释放资源，可以try resources 进行关闭，或者加final
         socket.close();
         System.out.println("客户端已退出～");
 
     }
 
+    /**
+     * 学习各种的构造函数
+     * 使用Ipv4获得本地端口
+     *
+     * @return 客户端socket，推荐使用无参构造，然后设置各种属性
+     * @throws IOException io异常
+     */
     private static Socket createSocket() throws IOException {
         // 无代理模式，等效于空构造函数
 //        Socket socket = new Socket(Proxy.NO_PROXY);
@@ -46,18 +54,23 @@ public class Client {
         // 新建一份具有HTTP代理的套接字，传输数据将通过www.baidu.com:8080端口转发
 //        Proxy proxy = new Proxy(Proxy.Type.HTTP,
 //                new InetSocketAddress(Inet4Address.getByName("www.baidu.com"), 8800));
-//        socket = new Socket(proxy);
+//        Socket sockt = new Socket(proxy);
 
         // 新建一个套接字，并且直接链接到本地20000的服务器上
-//        socket = new Socket("localhost", PORT);
+//        Socket socket = new Socket("localhost", PORT);
 
+        // 等同于 localhost
+//        final InetAddress localHost = InetAddress.getLocalHost();
         // 新建一个套接字，并且直接链接到本地20000的服务器上
-//        socket = new Socket(Inet4Address.getLocalHost(), PORT);
+//        Socket socket = new Socket(localHost, PORT);
+
 
         // 新建一个套接字，并且直接链接到本地20000的服务器上，并且绑定到本地20001端口上
-//        socket = new Socket("localhost", PORT, Inet4Address.getLocalHost(), LOCAL_PORT);
-//        socket = new Socket(Inet4Address.getLocalHost(), PORT, Inet4Address.getLocalHost(), LOCAL_PORT);
+        // 由于都是连接到本地 所以需要连接的服务器端host和本地的保持一致
+//        Socket socket = new Socket("localhost", PORT, Inet4Address.getLocalHost(), LOCAL_PORT);
+//        Socket socket = new Socket(Inet4Address.getLocalHost(), PORT, Inet4Address.getLocalHost(), LOCAL_PORT);
 
+        // bind 方法
         Socket socket = new Socket();
         // 绑定到本地20001端口
         socket.bind(new InetSocketAddress(Inet4Address.getLocalHost(), LOCAL_PORT));
@@ -65,6 +78,12 @@ public class Client {
         return socket;
     }
 
+    /**
+     * 配置socket的属性信息
+     *
+     * @param socket 客户端socket
+     * @throws SocketException 异常信息
+     */
     private static void initSocket(Socket socket) throws SocketException {
         // 设置读取超时时间为2秒
         socket.setSoTimeout(2000);
@@ -72,7 +91,7 @@ public class Client {
         // 是否复用未完全关闭的Socket地址，对于指定bind操作后的套接字有效
         socket.setReuseAddress(true);
 
-        // 是否开启Nagle算法
+        // 是否开启Nagle算法，优化网络空间，减少脏数据产生，保证性能
         socket.setTcpNoDelay(true);
 
         // 是否需要在长时无数据响应时发送确认数据（类似心跳包），时间大约为2小时
@@ -85,6 +104,7 @@ public class Client {
         socket.setSoLinger(true, 20);
 
         // 是否让紧急数据内敛，默认false；紧急数据通过 socket.sendUrgentData(1);发送
+        // 不建议设置 会和正常的数据混淆
         socket.setOOBInline(true);
 
         // 设置接收发送缓冲器大小
