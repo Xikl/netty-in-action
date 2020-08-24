@@ -112,6 +112,9 @@ public class Client {
         socket.setSendBufferSize(64 * 1024 * 1024);
 
         // 设置性能参数：短链接，延迟，带宽的相对重要性
+        // connection 短连接 连接一会就断开
+        // latency 延迟 要低 值就越低
+        // bandWith 带宽  组合发送
         socket.setPerformancePreferences(1, 1, 0);
     }
 
