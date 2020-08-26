@@ -3,10 +3,7 @@ package com.ximo.nettyinaction.socket.chapter03;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.Inet4Address;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.nio.ByteBuffer;
 
 /**
@@ -44,6 +41,9 @@ public class Server {
     private static ServerSocket createServerSocket() throws IOException {
         // 创建基础的ServerSocket
         ServerSocket serverSocket = new ServerSocket();
+
+        // 绑定一个端口， 设置backlog为bind最大有五十个连接，并没有accept的时候，第五十一个会报错
+//        serverSocket.bind(new InetSocketAddress(InetAddress.getLocalHost(), PORT), 50);
 
         // 绑定到本地端口20000上，并且设置当前可允许等待链接的队列为50个
         //serverSocket = new ServerSocket(PORT);
